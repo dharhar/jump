@@ -3,19 +3,21 @@
 #            setup
 ####################################
 #
-# as sudo, copy 'jump.sh' to '/bin/j' so you can run it by pressing 'j'.
 #
-# put "alias j='. j'" in .profile or wherever it will load on login
-#  or else the 'cd' part won't work
+# Copy 'jump.sh' to '/bin/j' so you can run it by pressing 'j'.
+#
+# Put "alias j='. j'" in .profile or wherever it will load on login
+#  or else it will only change the directory of the background shell,
+#  not your curent shell. There's probably a better way to do this.
 #
 ####################################
 #            usage
 ####################################
 #
-# press 'j' with no args to see a list of locations to jump to.
-# press 'j <location>' to jump to that location.
-# press 'j s' to save the current location so you can jump to it.
-# edit '.jumps' in your home directory if you want to change/delete
+# Press 'j' with no args to see a list of locations to jump to.
+# Press 'j <location>' to jump to that location.
+# Press 'j s' to save the current location so you can jump to it.
+# Edit '.jumps' in your home directory if you want to change/delete
 #  your saved locations.
 
 savefile=~/.jumps

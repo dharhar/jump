@@ -5,10 +5,11 @@ Shell script for jumping around your file system quicker than the cd command
             setup
 ####################################
 
-As sudo, copy 'jump.sh' to '/bin/j' so you can run it by pressing 'j'.
+Copy 'jump.sh' to '/bin/j' so you can run it by pressing 'j'.
 
 Put "alias j='. j'" in .profile or wherever it will load on login
- or else the 'cd' part won't work.
+ or else it will only change the directory of the background shell,
+ not your curent shell.
 
 ####################################
             usage
