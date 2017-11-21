@@ -4,9 +4,9 @@
 ####################################
 #
 #
-# Copy 'jump.sh' to '/bin/j' so you can run it by pressing 'j'.
+# put 'jump.sh' in your path (like /bin/) and make sure it's executable.
 #
-# Put "alias j='. j'" in .profile or wherever it will load on login
+# Put "alias j='. jump.sh'" in .profile or wherever it will load on login
 #  or else it will only change the directory of the background shell,
 #  not your curent shell. There's probably a better way to do this.
 #
