@@ -89,11 +89,12 @@ fi
 #------display locations--------
 if [ $# -eq 0 ]
   then
-    savedlocations=$(mktemp)
+#uncomment if you want to use less
+#    savedlocations=$(mktemp)
     echo here are your saved locations:
     while read LINE; do
-      printf "%-10s%s\n" "  ${LINE%% *}" "->  ${LINE##* }" >> savedlocations
+      printf "%-10s%s\n" "  ${LINE%% *}" "->  ${LINE##* }" # >> savedlocations
     done < $savefile
-    less savedlocations
-    rm savedlocations
+#    less savedlocations
+#    rm savedlocations
   fi
