@@ -4,9 +4,8 @@
 
 **setup:**
 
- Make sure it's executable, then put "alias j='. /path/to/jump.sh'" in .bashrc
- or wherever it will load on login or else it will only change the directory of 
- the background shell, not your curent shell.
+ Put "alias j='. /path/to/jump.sh'" in .bashrc or else it will only 
+ change the directory of the background shell, not your curent shell.
 
 **usage:**
 

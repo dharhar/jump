@@ -3,12 +3,8 @@
 #            setup
 ####################################
 #
-#
-# put 'jump.sh' in your path (like /bin/) and make sure it's executable.
-#
-# Put "alias j='. jump.sh'" in .profile or wherever it will load on login
-#  or else it will only change the directory of the background shell,
-#  not your curent shell. There's probably a better way to do this.
+# Put "alias j='. /path/to/jump.sh'" in .bashrc or else it will only 
+# change the directory of the background shell, not your curent shell.
 #
 ####################################
 #            usage
