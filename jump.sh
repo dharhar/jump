@@ -13,8 +13,7 @@
 # Press 'j' with no args to see a list of locations to jump to.
 # Press 'j <location>' to jump to that location.
 # Press 'j s' to save the current location so you can jump to it.
-# Edit '.jumps' in your home directory if you want to change/delete
-#  your saved locations.
+# Press 'j e' to edit the saved locations
 
 savefile=~/.jumps
 
@@ -70,6 +69,11 @@ if [ "$1" = "s" ]
 
     fi
 
+#------edit locations-----------
+
+elif [ "$1" = "e" ]; then
+  vi $savefile
+
 #------go there ----------------
 
 else
@@ -83,14 +87,11 @@ while read LINE; do
 fi
 
 #------display locations--------
+
 if [ $# -eq 0 ]
   then
-#uncomment if you want to use less
-#    savedlocations=$(mktemp)
     echo here are your saved locations:
     while read LINE; do
-      printf "%-10s%s\n" "  ${LINE%% *}" "->  ${LINE##* }" # >> savedlocations
+      printf "%-10s%s\n" "  ${LINE%% *}" "->  ${LINE##* }"
     done < $savefile
-#    less savedlocations
-#    rm savedlocations
   fi
