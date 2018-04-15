@@ -22,9 +22,18 @@ if [ ! -f ${savefile} ]
   then
     touch ${savefile}
 fi
+
+#------display locations--------
+
+if [ $# -eq 0 ]; then
+  echo here are your saved locations:
+  while read LINE; do
+    printf "%-10s%s\n" "  ${LINE%% *}" "->  ${LINE##* }"
+  done < $savefile
+
 #------save locations-----------
 
-if [ "$1" = "s" ]
+elif [ "$1" = "s" ]
   then
     here=`pwd`
     saveit=true
@@ -86,12 +95,3 @@ while read LINE; do
   done < $savefile
 fi
 
-#------display locations--------
-
-if [ $# -eq 0 ]
-  then
-    echo here are your saved locations:
-    while read LINE; do
-      printf "%-10s%s\n" "  ${LINE%% *}" "->  ${LINE##* }"
-    done < $savefile
-  fi
