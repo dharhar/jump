@@ -16,12 +16,7 @@
 # Press 'j e' to edit the saved locations
 
 savefile=~/.jumps
-
-#------initial setup------------
-if [ ! -f ${savefile} ]
-  then
-    touch ${savefile}
-fi
+touch ${savefile}
 
 #------display locations--------
 
