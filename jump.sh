@@ -41,18 +41,21 @@ elif [ "$1" = "s" ]; then
   }
 
   here=`pwd`
+  savit=true
   dirclone=`grep "\s${here}"$ $savefile`
-  [ ! "$dirclone" = "" ] && echo "This location is already saved as ${dirclone%% *}." && exit 1
+  [ ! "$dirclone" = "" ] && echo "This location is already saved as ${dirclone%% *}." && saveit=false
 
-  newname=`echo ${here##*/} | tr '[:upper:]' '[:lower:]'`
-  checkname
-  echo press y to save as "'${newname}'" or enter new name.
-  read choice
-  [ ! "$choice" = "y" ] && newname=$choice
-  checkname
+  if [ "$saveit" = true ]; then
+    newname=`echo ${here##*/} | tr '[:upper:]' '[:lower:]'`
+    checkname
+    echo press y to save as "'${newname}'" or enter new name.
+    read choice
+    [ ! "$choice" = "y" ] && newname=$choice
+    checkname
 
-  echo "$newname $here" >> $savefile
-  echo -e "\t$newname  ->  $here\n\tsaved"
+    echo "$newname $here" >> $savefile
+    echo -e "\t$newname  ->  $here\n\tsaved"
+  fi
 
 
 #------edit locations-----------
