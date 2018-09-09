@@ -21,55 +21,39 @@ touch ${savefile}
 #------display locations--------
 
 if [ $# -eq 0 ]; then
-  echo here are your saved locations:
+  echo Here are your saved locations:
   awk '{printf("%-10s%s\n",$1,"->  "$2)}' $savefile
 
 #------save locations-----------
 
-elif [ "$1" = "s" ]
-  then
-    here=`pwd`
-    saveit=true
-    namefree=true
-    newname=`echo ${here##*/} | tr '[:upper:]' '[:lower:]'`
 
-    while read LINE; do
-      if [ "$here" = "${LINE##* }" ] 
-        then
-          echo this location is already saved as ${LINE%% *}
-          saveit=false
-          break
-      fi
-      if [ "${LINE%% *}" = "${newname}" ] 
-        then
-          namefree=false
-          echo a location with this name already exists:
-          echo ${newname} '->' ${LINE##* }
-      fi
-      done < $savefile
+elif [ "$1" = "s" ]; then
 
-    if $saveit
-      then
-        if $namefree
-          then
-            echo "press y to save as '"${newname}"' or enter new name."
-            read choice
-            if [ $choice = 'y' ]
-              then
-                echo "$newname $here" >> $savefile
-                echo $newname    '->'    $here
-            else
-                echo "$choice $here" >> $savefile
-                echo $choice    '->'    $here
-            fi
-        else
-          echo enter a name to save this location as: 
-          read choice
-          echo "$choice $here" >> $savefile
-        fi
-        echo saved
+  checkname(){
+    nameclone=`grep ^"${newname}\s" $savefile`
+    while [ ! "$nameclone" = "" ]; do
+      echo A location with this name already exists:
+      echo ${newname}  '->' ${nameclone##* }
+      echo Enter a new name:
+      read newname
+      nameclone=`grep ^"${newname}\s" $savefile`
+    done
+  }
 
-    fi
+  here=`pwd`
+  dirclone=`grep "\s${here}"$ $savefile`
+  [ ! "$dirclone" = "" ] && echo "This location is already saved as ${dirclone%% *}." && exit 1
+
+  newname=`echo ${here##*/} | tr '[:upper:]' '[:lower:]'`
+  checkname
+  echo press y to save as "'${newname}'" or enter new name.
+  read choice
+  [ ! "$choice" = "y" ] && newname=$choice
+  checkname
+
+  echo "$newname $here" >> $savefile
+  echo -e "\t$newname  ->  $here\n\tsaved"
+
 
 #------edit locations-----------
 
