@@ -22,7 +22,7 @@ touch ${savefile}
 
 if [ $# -eq 0 ]; then
   echo here are your saved locations:
-  awk '{printf("%-10s%s\n",$1,"->  "$2)}' .jumps
+  awk '{printf("%-10s%s\n",$1,"->  "$2)}' $savefile
 
 #------save locations-----------
 
