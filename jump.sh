@@ -22,9 +22,7 @@ touch ${savefile}
 
 if [ $# -eq 0 ]; then
   echo here are your saved locations:
-  while read LINE; do
-    printf "%-10s%s\n" "  ${LINE%% *}" "->  ${LINE##* }"
-  done < $savefile
+  awk '{printf("%-10s%s\n",$1,"->  "$2)}' .jumps
 
 #------save locations-----------
 
@@ -82,10 +80,9 @@ elif [ "$1" = "e" ]; then
 
 else
 while read LINE; do
-  if [ "${LINE%% *}" = "$1" ] 
-    then
-      echo ${LINE##* }
-      cd ${LINE##* }
+  if [ "${LINE%% *}" = "$1" ]; then
+    echo ${LINE##* }
+    cd ${LINE##* }
   fi
   done < $savefile
 fi
