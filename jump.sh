@@ -41,7 +41,7 @@ elif [ "$1" = "s" ]; then
   }
 
   here=`pwd`
-  savit=true
+  saveit=true
   dirclone=`grep "\s${here}"$ $savefile`
   [ ! "$dirclone" = "" ] && echo "This location is already saved as ${dirclone%% *}." && saveit=false
 
