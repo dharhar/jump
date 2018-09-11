@@ -74,3 +74,9 @@ while read LINE; do
   done < $savefile
 fi
 
+unset savefile
+unset here
+unset saveit
+unset dirclone
+unset newname
+unset nameclone
