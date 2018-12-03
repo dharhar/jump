@@ -1,4 +1,4 @@
-# Jump around your file system quicker than the cd command
+## Jump around your file system quicker than the cd command
 
 
 ## jump.sh:
@@ -20,7 +20,7 @@
 
 ---
 
-# Copy files without typing directory paths
+## Copy files without typing directory paths
 
 
 ## cj:
