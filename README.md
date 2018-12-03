@@ -33,4 +33,4 @@
 
  Press 'cj \<files\>' to copy files to the target.
 
- Press 'cj j \<alias\> \<files\>' to copy files to the directory saved as \<alias\> by jump.sh.
+ Press 'cj j \<location\> \<files\>' to copy files to the directory saved as \<location\> by jump.sh.
