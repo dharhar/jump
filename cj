@@ -39,7 +39,7 @@ elif [ "$1" = "j" ]; then
 else
   dest=`cat $sfile`
   if [ ! "$dest" = "" ]; then 
-    cp -ruv $@ `$dest`/
+    cp -ruv $@ ${dest}/
   else
     echo No target directory. use \'cj s\' to create one.
   fi
