@@ -30,19 +30,19 @@ if [ $# -eq 0 ]; then
 elif [ "$1" = "s" ]; then
 
   checkname(){
-    nameclone=`grep ^"${newname}\s" $savefile`
+    nameclone=`egrep "^${newname}\s" $savefile`
     while [ ! "$nameclone" = "" ]; do
       echo A location with this name already exists:
       echo ${newname}  '->' ${nameclone##* }
       echo Enter a new name:
       read newname
-      nameclone=`grep ^"${newname}\s" $savefile`
+      nameclone=`egrep "^${newname}\s" $savefile`
     done
   }
 
   here=`pwd`
   saveit=true
-  dirclone=`grep "\s${here}"$ $savefile`
+  dirclone=`egrep "\s${here}$" $savefile`
   [ ! "$dirclone" = "" ] && echo "This location is already saved as ${dirclone%% *}." && saveit=false
 
   if [ "$saveit" = true ]; then
