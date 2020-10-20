@@ -15,7 +15,7 @@
 # 'j <location>' to jump to that location.
 # 'j s' to save the current location so you can jump to it.
 # 'j e' to edit the saved locations
-# 'j fzf' to jump to a location picked by fuzzyfinder
+# 'j f' to jump to a location picked by fuzzyfinder
 
 savefile=~/.jumps
 [ ! -f "$savefile" ] && touch $savefile
@@ -31,30 +31,34 @@ if [ $# -eq 0 ]; then
 
 elif [ "$1" = "s" ]; then
 
-  checkname(){
-    nameclone=`egrep "^${newname}\s" $savefile`
-    while [ ! "$nameclone" = "" ]; do
-      echo A location with this name already exists:
-      echo ${newname}  '->' ${nameclone##* }
-      echo Enter a new name:
-      read newname
-      nameclone=`egrep "^${newname}\s" $savefile`
-    done
+  isbuiltin(){
+    [[ $newname =~ ^(s|e|f)$ ]] && echo The name $newname is used for a builtin command. && return 0
+	return 1
   }
-
+  istaken(){
+    nameclone=`egrep "^${newname}\s" $savefile` && echo -e "A location with this name already exists:\n\t${newname}  '->' ${nameclone##* }" && return 0
+	return 1
+  }
+  checkname(){
+	  while istaken || isbuiltin; do
+		badname=$newname
+		echo Enter a new name:
+		read newname
+		[ "$newname" = "" ] && newname=$badname
+	  done
+  }
   here=`pwd`
-  saveit=true
-  dirclone=`egrep "\s${here}$" $savefile`
-  [ ! "$dirclone" = "" ] && echo "This location is already saved as ${dirclone%% *}." && saveit=false
-
-  if [ "$saveit" = true ]; then
+  if dirclone=`egrep "\s${here}$" $savefile`; then
+	  echo "This location is already saved as ${dirclone%% *}."
+  else
     newname=`echo ${here##*/} | tr '[:upper:]' '[:lower:]'`
     checkname
-    echo press y to save as "'${newname}'" or enter new name.
-    read choice
-    [ ! "$choice" = "y" ] && newname=$choice
-    checkname
-
+	if [ "$badname" = "" ]; then
+		echo press y to save as "'${newname}'" or enter new name.
+		read choice
+		[ ! "$choice" = "y" ] && newname=$choice
+		checkname
+	fi
     echo "$newname $here" >> $savefile
     echo -e "\t$newname  ->  $here\n\tsaved"
   fi
@@ -67,7 +71,7 @@ elif [ "$1" = "e" ]; then
 
 #----- go to location from fzf -----
 
-elif [ "$1" = "fzf" ]; then
+elif [ "$1" = "f" ]; then
   cd `awk '{print $2}' $savefile | fzf`
 
 #----- go to location from arg -----
@@ -81,10 +85,3 @@ while read LINE; do
   fi
   done < $savefile
 fi
-
-unset savefile
-unset here
-unset saveit
-unset dirclone
-unset newname
-unset nameclone
