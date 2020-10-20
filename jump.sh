@@ -5,26 +5,28 @@
 #
 # Put "alias j='. /path/to/jump.sh'" in .bashrc or else it will only 
 # change the directory of the background shell, not your curent shell.
+# Install fzf to use fzf mode.
 #
 ####################################
 #            usage
 ####################################
 #
-# Press 'j' with no args to see a list of locations to jump to.
-# Press 'j <location>' to jump to that location.
-# Press 'j s' to save the current location so you can jump to it.
-# Press 'j e' to edit the saved locations
+# 'j' with no args to see a list of locations to jump to.
+# 'j <location>' to jump to that location.
+# 'j s' to save the current location so you can jump to it.
+# 'j e' to edit the saved locations
+# 'j fzf' to jump to a location picked by fuzzyfinder
 
 savefile=~/.jumps
-touch ${savefile}
+[ ! -f "$savefile" ] && touch $savefile
 
-#------display locations--------
+#----- display locations -------
 
 if [ $# -eq 0 ]; then
   echo Here are your saved locations:
   awk '{printf("%-10s%s\n",$1,"->  "$2)}' $savefile
 
-#------save locations-----------
+#----- save locations ----------
 
 
 elif [ "$1" = "s" ]; then
@@ -58,18 +60,24 @@ elif [ "$1" = "s" ]; then
   fi
 
 
-#------edit locations-----------
+#----- edit locations --------------
 
 elif [ "$1" = "e" ]; then
-  vi $savefile
+  ${EDITOR-vi} $savefile
 
-#------go there ----------------
+#----- go to location from fzf -----
+
+elif [ "$1" = "fzf" ]; then
+  cd `awk '{print $2}' $savefile | fzf`
+
+#----- go to location from arg -----
 
 else
 while read LINE; do
   if [ "${LINE%% *}" = "$1" ]; then
     echo ${LINE##* }
     cd ${LINE##* }
+    break
   fi
   done < $savefile
 fi
